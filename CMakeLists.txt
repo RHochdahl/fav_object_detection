@@ -5,3 +5,5 @@ find_package(catkin REQUIRED COMPONENTS
   apriltag_ros
   geometry_msgs
 )
+
+catkin_package()
