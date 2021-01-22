@@ -3,7 +3,23 @@ project(fav_object_detection)
 
 find_package(catkin REQUIRED COMPONENTS
   apriltag_ros
+  message_generation
   geometry_msgs
+  std_msgs
 )
 
-catkin_package()
+add_message_files(
+  FILES
+  ObjectDetectionArray.msg
+  ObjectDetection.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs
+  std_msgs
+)
+
+catkin_package(
+  CATKIN_DEPENDS message_runtime
+)
