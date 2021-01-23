@@ -1,10 +1,29 @@
 <launch>
+  <arg name="launch_simulation" default="true"/>
+  <arg name="create_setpoints" default="true" doc="set to false if different node creates setpoints"/>
   <arg name="vehicle_name" default="bluerov" doc="Something like 'uuv04' or 'bluerov.'" />
   <arg name="vehicle_type" default="bluerov" doc="Either 'hippocampus' or 'bluerov'."/>
   <arg name="camera_name" default="front_camera" />
   <arg name="camera_frame" default="camera_frame" />
   <arg name="image_topic" default="image_raw" />
   <arg name="ns" default="$(arg camera_name)"/>
+
+  <group if="$(arg launch_simulation)">
+    <include file="$(find bluerov_sim)/launch/example_apriltag_world.launch">
+      <arg name="objects" value="true" />
+    </include>
+  </group>
+
+  <!-- Localization -->
+  <include file="$(find mu_auv_localization)/launch/localization.launch">
+    <arg name="vehicle_name" value="$(arg vehicle_name)" />
+    <arg name="vehicle_type" value="$(arg vehicle_type)" />
+  </include>
+
+  <!-- Control -->
+  <include file="$(find fav_control)/launch/control.launch">
+    <arg name="get_setpoints" value="$(arg create_setpoints)"/>
+  </include>
 
   <!-- Apriltag algorithm -->
   <node ns="$(arg ns)" pkg="apriltag_ros" type="apriltag_ros_continuous_node" name="apriltag_node" clear_params="true" output="screen">
