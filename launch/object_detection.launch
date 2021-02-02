@@ -6,6 +6,7 @@
   <arg name="camera_name" default="front_camera" />
   <arg name="camera_frame" default="camera_frame" />
   <arg name="image_topic" default="image_raw" />
+  <arg name="record" default="true" />
   <arg name="ns" default="$(arg camera_name)"/>
 
   <group if="$(arg launch_simulation)">
@@ -39,4 +40,9 @@
     <param name="camera_name" value="$(arg camera_name)" />
     <param name="ns" value="$(arg ns)" />
   </node>
+
+  <group if="$(arg record)">
+    <node name="record" pkg="rosbag" type="record" args="-o $(find object_detection)/bags/bag /x_setpoint /y_setpoint /yaw_setpoint /rosout /ekf_pose /ekf_twist /ground_truth/state /front_camera/tag_detections_image /mapping"/>
+  </group>
+
 </launch>
