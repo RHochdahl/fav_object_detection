@@ -42,7 +42,7 @@
   </node>
 
   <group if="$(arg record)">
-    <node name="record" pkg="rosbag" type="record" args="-o $(find object_detection)/bags/bag /x_setpoint /y_setpoint /yaw_setpoint /rosout /ekf_pose /ekf_twist /ground_truth/state /front_camera/tag_detections_image /mapping"/>
+    <node name="record" pkg="rosbag" type="record" args="-o $(find fav_object_detection)/bags/bag /x_setpoint /y_setpoint /yaw_setpoint /rosout /ekf_pose /ekf_twist /ground_truth/state /vertical_camera/tag_detections_image /front_camera/tag_detections_image /mapping"/>
   </group>
 
 </launch>
